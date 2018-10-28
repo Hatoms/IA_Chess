@@ -1,4 +1,4 @@
-from Tkinter import *
+from tkinter import *
 
 
 from piece import *
@@ -100,13 +100,12 @@ class Board:
 
 
     def find_case(self,x,y):
-
         for x_temp in range(50,480,60):
             if x > x_temp and x < x_temp+self.size_case:
-                col = ((x_temp+10)/60)-1
+                col = int(((x_temp+10)/60)-1)
                 for y_temp in range(50,480,60):
                     if y > y_temp and y < y_temp+self.size_case:
-                        row = ((y_temp+10)/60)-1
+                        row = int(((y_temp+10)/60)-1)
                         return(row,col)
 
         return None
@@ -144,7 +143,7 @@ class Board:
 
     def print_board(self):
 
-        print "-----------------------------"
+        print("-----------------------------")
         for row in self.board:
             temp = ""
             for elem in row:
@@ -165,8 +164,8 @@ class Board:
                     else:
                         temp += "K"
 
-            print temp
-        print "-----------------------------"
+            print(temp)
+        print("-----------------------------")
 
 
     def case_unselect(self):
@@ -221,14 +220,11 @@ class Board:
 
         self.board[self.selected[0][1][0]][self.selected[0][1][1]] = None
         if temp_piece.__class__.__name__ == "Pawn":
-
             temp_piece.has_moved = True
-
 
         if temp_piece.__class__.__name__ == "Pawn" and (case_temp[0] == 7 or case_temp[0] == 0):
             color_temp = "white" if tour else "black"
             temp_piece = Queen(color_temp,case_temp[0],case_temp[1],1,self.windows)
-            print "ifsldjksdffsmd"
 
         if temp_piece.__class__.__name__ == "Pawn" and self.selected[0][1][0] == 3 and tour:
             if case_temp[1]!=self.selected[0][1][1] and not self.board[case_temp[0]][case_temp[1]]:

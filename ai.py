@@ -7,7 +7,7 @@ class ai :
             self.brd = brd
             self.color = color
             self.game = game
-            self.depth = 4
+            self.depth = 3
             self.color_opponent = "black" if self.color == "white" else "white"
             self.tour = True if self.color == "white" else False
             self.final_move = None
@@ -59,36 +59,11 @@ class ai :
 
             self.brd.queek_move(temp_piece,move_possible[rng],check,self.tour)
 
-        # def play(self,check):
-        #
-        #     move_possible = self.find_move_possible(check,self.color)
-        #     max_evaluation = 0
-        #     final_move = None
-        #
-        #
-        #     for move in move_possible :
-        #
-        #         row,col = move[0].row, move[0].col
-        #         row_after,col_after = move[1:]
-        #         temp1 = self.brd.board[row][col]
-        #         temp2 = self.brd.board[row_after][col_after]
-        #         self.brd.board[row][col] = None
-        #         self.brd.board[row_after][col_after] = move[0]
-        #         evaluation_board = self.evaluate_board(self.color)
-        #         if evaluation_board >= max_evaluation :
-        #             max_evaluation = evaluation_board
-        #             final_move = move
-        #         self.brd.board[row][col] = temp1
-        #         self.brd.board[row_after][col_after] = temp2
-        #
-        #     temp_piece = final_move.pop(0)
-        #
-        #     self.brd.queek_move(temp_piece,final_move,check,self.tour)
-
         def play(self,check):
 
+            self.count = 0
             self.minimax(True,self.depth)
-
+            print("Evaluation of position: " + str(self.evaluate_board()))
             temp_piece = self.final_move.pop(0)
 
             self.brd.queek_move(temp_piece,self.final_move,check,self.tour)
@@ -96,24 +71,14 @@ class ai :
             self.final_move = None
 
         def minimax(self,tour,temp_depth):
-
             if temp_depth == 0:
-                # print self.evaluate_board()
                 return self.evaluate_board()
 
-
-            is_check = self.game.is_check(self.brd.board,self.brd.moves_white,self.brd.moves_black)
+            is_check = self.game.is_check(self.brd.board, self.brd.moves_white, self.brd.moves_black)
             move_possible = self.find_move_possible(is_check,self.color) if tour else self.find_move_possible(is_check,self.color_opponent)
             tour_evaluation = -10000 if tour else 10000
-            final_move = None
 
             for move in move_possible :
-
-                # if temp_depth == 1:
-                #     print "-------------"
-                #     print self.final_move
-                #     print move
-                #     print "-------------"
 
                 row,col = move[0].row, move[0].col
                 row_after,col_after = move[1:]

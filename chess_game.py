@@ -138,6 +138,8 @@ class ChessGame:
 
         brd = self.board_to_string(board)
         moves = moves_white if self.tour else moves_black
+        if not moves:
+            return False
 
         if moves[len(moves)-1][3] == "x":
             self.board_white_memory = []
